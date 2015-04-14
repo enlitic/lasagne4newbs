@@ -1,1 +1,2 @@
-Some beginner code for lasagne - simpler than the examples included in lasagne.
+* lasagne4newbs
+Some beginner code for lasagne - simpler than the examples included in lasagne
