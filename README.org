@@ -1,2 +1,11 @@
 * lasagne4newbs
-Some beginner code for lasagne - simpler than the examples included in lasagne
+Some beginner code for lasagne - simpler than the examples included in lasagne.
+
+See [[./mnist_conv.py]] for a simpler, documented version of a convnet explaining what lasagne is doing.
+** Prerequisites
+- basic knowledge of Theano
+** Dependencies
+- numpy
+- Theano
+- Lasagne
+- scikit-learn
