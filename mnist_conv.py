@@ -139,7 +139,7 @@ train_fn = theano.function(inputs=[l_in.input_var, target_vector],
 #   input data
 valid_fn = theano.function(inputs=[l_in.input_var, target_vector],
                            outputs=[deterministic_loss,
-                                    l_out.get_output()])
+                                    l_out.get_output(deterministic=True)])
 
 # ################################# training #################################
 
