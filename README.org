@@ -1,7 +1,7 @@
 * lasagne4newbs
 Some beginner code for lasagne - simpler than the examples included in lasagne.
 
-See [[./mnist_conv.py]] for a simpler, documented version of a convnet explaining what lasagne is doing.
+Go to [[./mnist_conv.py]] and read the comments (that is where the good stuff is).
 ** Prerequisites
 - basic knowledge of Theano
 ** Dependencies
