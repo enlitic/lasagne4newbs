@@ -58,7 +58,7 @@ l_conv1 = lasagne.layers.Conv2DLayer(
 # - ds is the size of the max pool
 # - by default, the stride of the max pool is the same as it's
 #   receptive area
-l_pool1 = lasagne.layers.MaxPool2DLayer(l_conv1, ds=(2, 2))
+l_pool1 = lasagne.layers.MaxPool2DLayer(l_conv1, pool_size=(2, 2))
 
 l_conv2 = lasagne.layers.Conv2DLayer(
     l_pool1,
@@ -67,7 +67,7 @@ l_conv2 = lasagne.layers.Conv2DLayer(
     nonlinearity=lasagne.nonlinearities.rectify,
     W=lasagne.init.GlorotUniform(),
 )
-l_pool2 = lasagne.layers.MaxPool2DLayer(l_conv2, ds=(2, 2))
+l_pool2 = lasagne.layers.MaxPool2DLayer(l_conv2, pool_size=(2, 2))
 
 l_hidden1 = lasagne.layers.DenseLayer(
     l_pool2,
@@ -92,19 +92,20 @@ l_out = lasagne.layers.DenseLayer(
 # int32 vector
 target_vector = T.ivector('y')
 
-objective = lasagne.objectives.Objective(
-    l_out,
-    loss_function=lasagne.objectives.categorical_crossentropy)
 
-# - theano variable for non-deterministic loss (ie. with dropout)
-# - this overwrites the objective's default target_var (which is a
-#   matrix)
+def loss_fn(output):
+    return T.mean(lasagne.objectives.categorical_crossentropy(output,
+                                                              target_vector))
+
+stochastic_out = lasagne.layers.get_output(l_out)
 # - every layer is passed the deterministic=True flag, but in this
 #   case, only the dropout layer actually uses it
-stochastic_loss = objective.get_loss(target=target_vector)
+deterministic_out = lasagne.layers.get_output(l_out, deterministic=True)
+
+# - theano variable for non-deterministic loss (ie. with dropout)
+stochastic_loss = loss_fn(stochastic_out)
 # - theano variable for deterministic (ie. without dropout)
-deterministic_loss = objective.get_loss(target=target_vector,
-                                        deterministic=True)
+deterministic_loss = loss_fn(deterministic_out)
 
 # ######################## compiling theano functions ########################
 
@@ -138,8 +139,7 @@ train_fn = theano.function(inputs=[l_in.input_var, target_vector],
 #   second element is the actual predicted probabilities for the
 #   input data
 valid_fn = theano.function(inputs=[l_in.input_var, target_vector],
-                           outputs=[deterministic_loss,
-                                    l_out.get_output(deterministic=True)])
+                           outputs=[deterministic_loss, deterministic_out])
 
 # ################################# training #################################
 
