@@ -56,7 +56,6 @@ l_conv1 = lasagne.layers.Conv2DLayer(
     nonlinearity=lasagne.nonlinearities.rectify,
     W=lasagne.init.GlorotUniform(),
 )
-# - ds is the size of the max pool
 # - by default, the stride of the max pool is the same as it's
 #   receptive area
 l_pool1 = lasagne.layers.MaxPool2DLayer(l_conv1, pool_size=(2, 2))
