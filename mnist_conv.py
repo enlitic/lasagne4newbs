@@ -18,7 +18,7 @@ mnist = sklearn.datasets.fetch_mldata('MNIST original')
 X = mnist['data'].astype(theano.config.floatX) / 255.0
 y = mnist['target'].astype("int32")
 X_train, X_valid, y_train, y_valid = sklearn.cross_validation.train_test_split(
-    X, y, random_state=42)
+    X, y, random_state=42, train_size=50000, test_size=10000)
 # need to reshape arrays into images, and add in a channel dimension
 # there is only 1 channel in this case because the images are gray scale
 X_train = X_train.reshape(-1, 1, 28, 28)
