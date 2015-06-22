@@ -1,6 +1,7 @@
 from __future__ import division, absolute_import
 from __future__ import print_function, unicode_literals
 
+import time
 import numpy as np
 import sklearn.datasets
 import sklearn.cross_validation
@@ -148,6 +149,7 @@ print("Starting training...")
 num_epochs = 25
 batch_size = 600
 for epoch_num in range(num_epochs):
+    start_time = time.time()
     # iterate over training minibatches and update the weights
     num_batches_train = int(np.ceil(len(X_train) / batch_size))
     train_losses = []
@@ -183,5 +185,6 @@ for epoch_num in range(num_epochs):
     # calculate accuracy for this epoch
     accuracy = sklearn.metrics.accuracy_score(y_valid, predicted_classes)
 
-    print("Epoch: %d, train_loss=%f, valid_loss=%f, valid_accuracy=%f"
-          % (epoch_num + 1, train_loss, valid_loss, accuracy))
+    total_time = time.time() - start_time
+    print("Epoch: %d, train_loss=%f, valid_loss=%f, valid_accuracy=%f, time=%fs"
+          % (epoch_num + 1, train_loss, valid_loss, accuracy, total_time))
