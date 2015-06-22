@@ -146,7 +146,7 @@ valid_fn = theano.function(inputs=[l_in.input_var, target_vector],
 print("Starting training...")
 
 num_epochs = 25
-batch_size = 100
+batch_size = 600
 for epoch_num in range(num_epochs):
     # iterate over training minibatches and update the weights
     num_batches_train = int(np.ceil(len(X_train) / batch_size))
