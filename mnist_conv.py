@@ -33,6 +33,7 @@ X_valid = X_valid.reshape(-1, 1, 28, 28)
 # - ReLU
 # - 2x2 maxpool
 # - fully connected layer - 256 units
+# - ReLU
 # - 50% dropout
 # - fully connected layer- 10 units
 # - softmax
